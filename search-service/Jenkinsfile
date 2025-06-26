@@ -8,7 +8,7 @@ pipeline{
 		stage('Checkout Repository') {
 			steps {
 				echo "Checking out the repository..."
-				git url: 'https://github.com/gitneo/bookstore.git', branch: '${env.BRANCH_NAME}', credentialsId: 'global-pat'
+				git url: 'https://github.com/gitneo/bookstore.git', branch: '${env.BRANCH_NAME}', credentialsId: 'github-pat'
 			}
 		}
 
