@@ -5,7 +5,7 @@ pipeline{
 		IMAGE_TAG = "${env.BUILD_NUMBER}"
 		def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
 		def gitBranch = scm.getBranches()[0].getName()
-		def buildNumber = env.BUILD_NUMBER
+		def buildNumber = '${env.BUILD_NUMBER}'
 	}
 	stages{
 		stage('Checkout Repository') {
