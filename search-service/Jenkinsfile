@@ -1,8 +1,10 @@
 pipeline{
 	agent any
 	environment {
-		GIT_REPO = 'https://github.com/gitneo/bookstore.git'
-		SERVICE_NAME = 'search-service'
+		GIT_REPO = 'https://github.com/gitneo/qryos-1.git'
+        GIT_BRANCH = 'master'
+		APP_NAME = 'search-service'
+		IMAGE_TAG = "${env.BUILD_NUMBER}"
 	}
 	stages{
 		stage('Checkout Repository') {
@@ -28,13 +30,13 @@ pipeline{
 
 		stage('Deploy service') {
 			steps {
-				sh 'docker build -t ${APP_NAME}:${IMAGE_TAG} search-service'
+				sh 'docker build -t ${APP_NAME}-${IMAGE_TAG} search-service'
 			}
 		}
 
 		stage('Expose docker image to Kubernetes') {
 			steps {
-				sh 'minikube image load ${SERVICE_NAME}::lane-${env.BUILD_NUMBER}'
+				sh 'minikube image load ${SERVICE_NAME}::lane-${IMAGE_TAG}'
 
 			}
 		}
