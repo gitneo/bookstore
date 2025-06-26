@@ -1,6 +1,7 @@
 pipeline{
 	agent any
 	environment {
+		SERVICE_NAME = 'search-service'
 		IMAGE_TAG = 'search-service-${env.BUILD_NUMBER}'
 	}
 	stages{
@@ -32,13 +33,13 @@ pipeline{
 
 		stage('Deploy service') {
 			steps {
-				sh 'docker build -t search-service-${env.BUILD_NUMBER} search-service'
+				sh 'docker build -t ${SERVICE_NAME}:lane-${env.BUILD_NUMBER} search-service'
 			}
 		}
 
 		stage('Expose docker image to Kubernetes') {
 			steps {
-				sh 'minikube image load search-service-${env.BUILD_NUMBER}'
+				sh 'minikube image load ${SERVICE_NAME}:lane-${env.BUILD_NUMBER}'
 			}
 		}
 	}
