@@ -12,11 +12,12 @@ pipeline{
 			steps {
 				script {
 					echo "Fetching SCM details..."
-					env.GIT_URL = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
-					env.GIT_BRANCH = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
-					echo "Current Branch: ${env.GIT_BRANCH}"
-					echo "Repository URL: ${env.GIT_URL}"
-					echo "Image Tag: ${env.IMAGE_TAG}"
+					def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
+					def gitBranch = scm.getBranches()[0].getName()
+					def buildNumber = env.BUILD_NUMBER ?: 'latest'
+					echo "Current Branch: ${gitBranch}"
+					echo "Repository URL: ${gitUrl}"
+					echo "Image Tag: ${buildNumber}"
 				}
 			}
 		}
