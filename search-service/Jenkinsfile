@@ -2,15 +2,16 @@ pipeline{
 	agent any
 	environment {
 		GIT_REPO = 'https://github.com/gitneo/qryos-1.git'
-        GIT_BRANCH = 'master'
 		APP_NAME = 'search-service'
+		GIT_BRANCH = "${env.BRANCH_NAME}"
 		IMAGE_TAG = "${env.BUILD_NUMBER}"
+		GIT_URL = "${env.GIT_URL}"
 	}
 	stages{
 		stage('Checkout Repository') {
 			steps {
 				echo "Checking out the repository..."
-				git url: 'https://github.com/gitneo/bookstore.git', branch: 'master', credentialsId: 'github-pat'
+				git url: '${GIT_URL}', branch: '${GIT_BRANCH}', credentialsId: 'github-pat'
 			}
 		}
 
