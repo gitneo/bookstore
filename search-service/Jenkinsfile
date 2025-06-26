@@ -1,13 +1,14 @@
 pipeline{
 	agent any
 	environment {
+		GIT_REPO = 'https://github.com/gitneo/bookstore.git'
 		SERVICE_NAME = 'search-service'
 	}
 	stages{
 		stage('Checkout Repository') {
 			steps {
 				echo "Checking out the repository..."
-				git url: '${env.GIT_URL}', branch: '${env.BRANCH_NAME}', credentialsId: 'github-pat'
+				git url: 'https://github.com/gitneo/bookstore.git', branch: '${env.BRANCH_NAME}', credentialsId: 'github-pat'
 			}
 		}
 
