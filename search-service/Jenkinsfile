@@ -1,7 +1,7 @@
 pipeline{
 	agent any
 	environment {
-		GIT_REPO = 'https://github.com/gitneo/qryos-1.git'
+		GIT_REPO = 'https://github.com/gitneo/bookstore.git'
         GIT_BRANCH = 'master'
 		APP_NAME = 'search-service'
 		IMAGE_TAG = "${env.BUILD_NUMBER}"
