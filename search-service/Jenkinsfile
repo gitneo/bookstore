@@ -10,12 +10,12 @@ pipeline{
 	stages{
 		stage('Checkout Repository') {
 			steps {
-				echo "Checking out the repository..."
-				def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
-				def gitBranch = scm.getBranches()[0].getName()
-				def buildNumber = env.BUILD_NUMBER
-
-				git url: gitUrl, branch: gitBranch, credentialsId: 'github-pat'
+				script {
+					def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
+					def gitBranch = scm.getBranches()[0].getName()
+					def buildNumber = env.BUILD_NUMBER
+					git url: gitUrl, branch: gitBranch, credentialsId: 'github-pat'
+				}
 			}
 		}
 
