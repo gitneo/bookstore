@@ -35,7 +35,8 @@ pipeline{
 			steps {
 				script {
 					def serviceName = env.APP_NAME
-            		def buildTag = "${serviceName}-${env.BUILD_NUMBER}"
+            		def buildTag = '${serviceName}-${env.BUILD_NUMBER}'
+
             		sh 'docker build -t ${buildTag} search-service'
             		sh 'minikube image load ${buildTag}'
 				}
