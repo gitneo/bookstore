@@ -8,24 +8,14 @@ pipeline{
 		GIT_URL = "${env.GIT_URL}"
 	}
 	stages{
-		stage('Getting SCM details') {
-			steps {
-				script {
-					echo "Fetching SCM details..."
-					def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
-					def gitBranch = scm.getBranches()[0].getName()
-					def buildNumber = env.BUILD_NUMBER ?: 'latest'
-					echo "Current Branch: ${gitBranch}"
-					echo "Repository URL: ${gitUrl}"
-					echo "Image Tag: ${buildNumber}"
-				}
-			}
-		}
-
 		stage('Checkout Repository') {
 			steps {
 				echo "Checking out the repository..."
-				git url: "${gitUrl}", branch:"${gitBranch}", credentialsId: 'github-pat'
+				def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
+				def gitBranch = scm.getBranches()[0].getName()
+				def buildNumber = env.BUILD_NUMBER
+
+				git url: gitUrl, branch: gitBranch, credentialsId: 'github-pat'
 			}
 		}
 
