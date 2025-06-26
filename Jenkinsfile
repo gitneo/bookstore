@@ -33,15 +33,14 @@ pipeline{
 				sh 'docker build -t ${APP_NAME}:${IMAGE_TAG} .'
 			}
 		}
+	}
 
-
-		post{
-			success{
-				echo "Pipeline completed successfully!"
-			}
-			failure{
-				echo "Pipeline failed. Please check the logs for details."
-			}
+	post{
+		success{
+			echo "Pipeline completed successfully!"
+		}
+		failure{
+			echo "Pipeline failed. Please check the logs for details."
 		}
 	}
 }
