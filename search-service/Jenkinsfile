@@ -31,15 +31,14 @@ pipeline{
 			}
 		}
 
-		stage('Deploy service') {
+		stage('Dockerize service') {
 			steps {
-				sh 'docker build -t ${SERVICE_NAME}-${env.BUILD_NUMBER} search-service'
-			}
-		}
-
-		stage('Expose docker image to Kubernetes') {
-			steps {
-				sh 'minikube image load ${SERVICE_NAME}-${env.BUILD_NUMBER}'
+				script {
+					def serviceName = env.APP_NAME
+            		def buildTag = "${serviceName}-${env.BUILD_NUMBER}"
+            		sh 'docker build -t ${buildTag} search-service'
+            		sh 'minikube image load ${buildTag}'
+				}
 			}
 		}
 	}
