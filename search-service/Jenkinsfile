@@ -4,20 +4,15 @@ pipeline{
 		IMAGE_TAG = 'search-service-${env.BUILD_NUMBER}'
 	}
 	stages{
-		stage('Get SCM Details') {
+		stage('Checkout SCM') {
 			steps {
 				script {
 					def gitUrl = scm.getUserRemoteConfigs()[0].getUrl()
 					def gitBranch = scm.getBranches()[0].getName()
 					echo "Git URL: ${gitUrl}"
 					echo "Git Branch: ${gitBranch}"
+					git url: gitUrl, branch: gitBranch, credentialsId: 'github-pat'
 				}
-			}
-		}
-
-		stage('Checkout Repository') {
-			steps {
-				git url: gitUrl, branch: gitBranch, credentialsId: 'github-pat'
 			}
 		}
 
