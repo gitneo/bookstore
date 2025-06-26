@@ -33,6 +33,12 @@ pipeline{
 				sh 'docker build -t ${APP_NAME}:${IMAGE_TAG} search-service'
 			}
 		}
+
+		stage('Expose docker image to Kubernetes') {
+			steps {
+				sh 'minikube image load ${APP_NAME}:${IMAGE_TAG}'
+			}
+		}
 	}
 
 	post{
