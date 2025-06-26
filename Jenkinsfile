@@ -7,29 +7,29 @@ pipeline{
 		IMAGE_TAG = "${env.BUILD_NUMBER}"
 	}
 	stages{
-		stage("Checkout Repository"){
-			steps{
+		stage('Checkout Repository') {
+			steps {
 				echo "Checking out the repository..."
 				git url: 'https://github.com/gitneo/bookstore.git', branch: 'master', credentialsId: 'github-pat'
 			}
 		}
 
-		stage{"Build service"}{
-			steps{
+		stage{'Build service'} {
+			steps {
 				echo "Building the service..."
 				sh 'mvn clean package -DskipTests'
 			}
 		}
 
-		stage("Test service"){
-			steps{
+		stage('Test service') {
+			steps {
 				echo "Running tests..."
 				sh 'mvn test'
 			}
 		}
 
-		stage("Deploy service"){
-			steps{
+		stage('Deploy service') {
+			steps {
 				sh 'docker build -t ${APP_NAME}:${IMAGE_TAG} .'
 			}
 		}
