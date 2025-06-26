@@ -14,7 +14,7 @@ pipeline{
 			}
 		}
 
-		stage{'Build service'} {
+		stage('Build service') {
 			steps {
 				echo "Building the service..."
 				sh 'mvn clean package -DskipTests'
