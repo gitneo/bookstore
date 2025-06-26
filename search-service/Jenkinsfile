@@ -1,16 +1,13 @@
 pipeline{
 	agent any
 	environment {
-		GIT_REPO = 'https://github.com/gitneo/bookstore.git'
-        GIT_BRANCH = 'master'
-		APP_NAME = 'search-service'
-		IMAGE_TAG = "${env.BUILD_NUMBER}"
+		SERVICE_NAME = 'search-service'
 	}
 	stages{
 		stage('Checkout Repository') {
 			steps {
 				echo "Checking out the repository..."
-				git url: 'https://github.com/gitneo/bookstore.git', branch: 'master', credentialsId: 'github-pat'
+				git url: '${env.GIT_URL}', branch: '${env.BRANCH_NAME}', credentialsId: 'github-pat'
 			}
 		}
 
@@ -36,7 +33,8 @@ pipeline{
 
 		stage('Expose docker image to Kubernetes') {
 			steps {
-				sh 'minikube image load ${APP_NAME}:${IMAGE_TAG}'
+				sh 'minikube image load ${SERVICE_NAME}::${env.BRANCH_NAME}:lane-${env.BUILD_NUMBER}'
+
 			}
 		}
 	}
