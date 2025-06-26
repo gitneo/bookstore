@@ -8,10 +8,23 @@ pipeline{
 		GIT_URL = "${env.GIT_URL}"
 	}
 	stages{
+		stage('Getting SCM details') {
+			steps {
+				script {
+					echo "Fetching SCM details..."
+					env.GIT_URL = sh(script: 'git config --get remote.origin.url', returnStdout: true).trim()
+					env.GIT_BRANCH = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+					echo "Current Branch: ${env.GIT_BRANCH}"
+					echo "Repository URL: ${env.GIT_URL}"
+					echo "Image Tag: ${env.IMAGE_TAG}"
+				}
+			}
+		}
+
 		stage('Checkout Repository') {
 			steps {
 				echo "Checking out the repository..."
-				git url: 'https://github.com/gitneo/bookstore.git', branch:'${GIT_BRANCH}', credentialsId: 'github-pat'
+				git url: 'https://github.com/gitneo/bookstore.git', branch:'master', credentialsId: 'github-pat'
 			}
 		}
 
