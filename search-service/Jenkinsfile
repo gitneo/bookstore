@@ -34,7 +34,7 @@ pipeline{
 
 		stage('Expose docker image to Kubernetes') {
 			steps {
-				sh 'minikube image load ${SERVICE_NAME}::${env.BRANCH_NAME}:lane-${env.BUILD_NUMBER}'
+				sh 'minikube image load ${SERVICE_NAME}::lane-${env.BUILD_NUMBER}'
 
 			}
 		}
