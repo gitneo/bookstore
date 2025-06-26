@@ -33,13 +33,13 @@ pipeline{
 
 		stage('Deploy service') {
 			steps {
-				sh 'docker build -t ${SERVICE_NAME}-${env.BUILD_NUMBER} search-service'
+				sh 'docker build -t ${SERVICE_NAME} search-service'
 			}
 		}
 
 		stage('Expose docker image to Kubernetes') {
 			steps {
-				sh 'minikube image load ${SERVICE_NAME}-${env.BUILD_NUMBER}'
+				sh 'minikube image load ${SERVICE_NAME}'
 			}
 		}
 	}
